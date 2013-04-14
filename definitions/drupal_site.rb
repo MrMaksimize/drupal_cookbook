@@ -72,4 +72,8 @@ define :drupal_site, :enable => true, :httpd_group => 'www-data' do
     action :grant
   end
 
+  execute "grant-remote-perms" do
+    command "/usr/bin/mysql -u root -p#{node['mysql']['server_root_password']} -e \"GRANT ALL PRIVILEGES ON *.* to 'root'@'%' IDENTIFIED BY '#{node['mysql']['server_root_password']}'\""
+  end
+
 end

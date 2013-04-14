@@ -39,6 +39,7 @@ include_recipe 'apache2::mod_php5'
 include_recipe 'database::mysql'
 include_recipe 'mysql::server'
 
+
 cookbook_file "#{Chef::Config[:file_cache_path]}/file-permissions.sh" do
   source  'file-permissions.sh'
   mode    '755'
