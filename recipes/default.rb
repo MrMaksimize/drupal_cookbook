@@ -33,6 +33,11 @@ include_recipe 'php::module_mysql'
 include_recipe 'php::module_gd'
 include_recipe 'php::module_apc'
 
+#cURL
+package "php5-curl" do
+  action :install
+end
+
 include_recipe 'git'
 include_recipe 'apache2'
 include_recipe 'apache2::mod_php5'
