@@ -43,7 +43,7 @@ include_recipe 'apache2'
 include_recipe 'apache2::mod_php5'
 include_recipe 'database::mysql'
 include_recipe 'mysql::server'
-#include_recipe 'chef-xdebug::default'
+include_recipe 'chef-xdebug::default'
 
 
 cookbook_file "#{Chef::Config[:file_cache_path]}/file-permissions.sh" do
