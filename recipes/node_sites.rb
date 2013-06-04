@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: drupal_projects
-# Recipe:: data_bag
+# Cookbook Name:: drupal
+# Recipe:: node_sites
 #
 # Copyright (C) 2013 Will Milton
 # 
@@ -17,29 +17,13 @@
 # limitations under the License.
 #
 
-include_recipe 'drupal_projects::default'
+include_recipe 'drupal::default'
 
-projects = node['drupal']['projects'].to_hash
-
-projects.each do |p_name, project|
-
-  drupal_root = "/var/drupals/#{p_name}/www"
-
-  drupal_project drupal_root
-
-  sites = project['sites']
-
-  sites.each do |site_name, site|
-    drupal_site site_name do
-      drupal_root   drupal_root
-      site_uri      site['uri']
-    end
-    if site['build']
-      execute "build-#{site_name}" do
-        cwd     drupal_root
-        command "/var/drupals/#{p_name}/build/drush-build.sh --uri='#{site['uri']}'"
-        user    'vagrant'
-      end
-    end
+node['drupal']['sites'].to_hash.each do |uri, info|
+  site = drupal_site uri do
+    db_init true
+  end
+  info.each do |parameter, value|
+    site.send(parameter, value)
   end
 end
