@@ -12,3 +12,4 @@ attribute :db_username,     :kind_of => String, :default => 'devDBA'
 attribute :db_password,     :kind_of => String, :default => 'devPASS'
 attribute :db,              :kind_of => String, :default => 'devDB'
 attribute :db_init,         :kind_of => [TrueClass, FalseClass], :default => false
+attribute :cnf_path,        :kind_of => [String, NilClass], :default => nil
