@@ -28,11 +28,6 @@ action :create do
     end
   end
 
-  #execute "krafwagen_build" do
-  #  cwd "#{new_resource.root}"
-  #  command "drush kw-b"
-  #  action :run
-  #end
 
   settings_compile cnf_path
   web_app new_resource.uri do
