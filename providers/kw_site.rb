@@ -7,34 +7,14 @@ action :create do
   site_path = "#{doc_root}/sites/#{new_resource.subdir}"
   kw_command_path = "#{node['drupal']['drush']['root']}/#{node['drupal']['drush']['version']}/commands/kraftwagen"
 
-  #directory site_path do
-  #  recursive true
-  #  owner     new_resource.owner unless new_resource.owner.nil?
-  #  group     group
-  #  mode      0775
-  #end
-
-  git "#{kw_command_path}" do
-    repository "git://github.com/kraftwagen/kraftwagen.git"
-    reference "master"
-    action :sync
-  end
-
-  execute "drush_cc" do
-    command "drush cc drush"
-    action :run
-  end
-
-  execute "kraftwagen_setup" do
-    cwd "#{new_resource.root}"
-    command "drush kw-s"
-    action :run
-  end
 
   template "#{cnf_path}/settings.php" do
     owner     new_resource.owner
     group     new_resource.group
     mode      0660
+    variables ({
+      conf_path: cnf_path
+    })
     if new_resource.settings_source.nil?
       source    "settings.php.erb"
       cookbook  'drupal'
@@ -48,13 +28,13 @@ action :create do
     end
   end
 
-  execute "krafwagen_build" do
-    cwd "#{new_resource.root}"
-    command "drush kw-b"
-    action :run
-  end
+  #execute "krafwagen_build" do
+  #  cwd "#{new_resource.root}"
+  #  command "drush kw-b"
+  #  action :run
+  #end
 
-  settings_compile site_path
+  settings_compile cnf_path
   web_app new_resource.uri do
     server_name     uri
     docroot         doc_root
@@ -73,8 +53,8 @@ action :create do
   end
 end
 
-def settings_compile(site_path)
-  site_conf_d     = "#{site_path}/settings.conf.d"
+def settings_compile(cnf_path)
+  site_conf_d     = "#{cnf_path}/settings.conf.d"
   ini_conf_d      = "#{site_conf_d}/ini.conf.d"
   globals_conf_d  = "#{site_conf_d}/globals.conf.d"
 
