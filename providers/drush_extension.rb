@@ -8,4 +8,8 @@ action :create do
         action :sync
     end
 
+    execute "drush cc drush" do
+        action :run
+    end
+
 end

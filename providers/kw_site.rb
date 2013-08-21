@@ -28,6 +28,9 @@ action :create do
     end
   end
 
+  drupal_drush_extension "kraftwagen" do
+      git_url "git://github.com/kraftwagen/kraftwagen.git"
+  end
 
   settings_compile cnf_path
   web_app new_resource.uri do
