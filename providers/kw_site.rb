@@ -11,6 +11,7 @@ action :create do
       git_url "git://github.com/kraftwagen/kraftwagen.git"
   end
 
+  # Set up the kw repo.
   execute "kraftwagen-setup" do
       command   "drush kw-s"
       action    :run
@@ -18,6 +19,16 @@ action :create do
       group     new_resource.group
       creates   cnf_path
   end
+
+  # Execute the build if necessary
+  #execute "kraftwagen-build" do
+  #    command   "drush kw-b"
+  #    action    :run
+  #    cwd       new_resource.root
+  #    group     new_resource.group
+  #    creates   doc_root
+  #end
+
 
 
   template "#{cnf_path}/settings.php" do
