@@ -7,6 +7,18 @@ action :create do
   site_path = "#{doc_root}/sites/#{new_resource.subdir}"
   kw_command_path = "#{node['drupal']['drush']['root']}/#{node['drupal']['drush']['version']}/commands/kraftwagen"
 
+  drupal_drush_extension "kraftwagen" do
+      git_url "git://github.com/kraftwagen/kraftwagen.git"
+  end
+
+  execute "kraftwagen-setup" do
+      command   "drush kw-s"
+      action    :run
+      cwd       new_resource.root
+      group     new_resource.group
+      creates   cnf_path
+  end
+
 
   template "#{cnf_path}/settings.php" do
     owner     new_resource.owner
@@ -28,9 +40,6 @@ action :create do
     end
   end
 
-  drupal_drush_extension "kraftwagen" do
-      git_url "git://github.com/kraftwagen/kraftwagen.git"
-  end
 
   settings_compile cnf_path
   web_app new_resource.uri do
