@@ -8,7 +8,8 @@ action :create do
   kw_command_path = "#{node['drupal']['drush']['root']}/#{node['drupal']['drush']['version']}/commands/kraftwagen"
 
   drupal_drush_extension "kraftwagen" do
-      git_url "git://github.com/kraftwagen/kraftwagen.git"
+      git_url       "git://github.com/winmillwill/kraftwagen.git"
+      branch_name   "relative-links"
   end
 
   # Set up the kw repo.
@@ -35,6 +36,7 @@ action :create do
     owner     new_resource.owner
     group     new_resource.group
     mode      0660
+    action    :create_if_missing
     variables ({
       conf_path: cnf_path
     })
@@ -89,6 +91,7 @@ def settings_compile(cnf_path)
     group   new_resource.group
     source  "databases.my.default.json.erb"
     mode    0660
+    action  :create_if_missing
     variables ({
       username: new_resource.db_username,
       password: new_resource.db_password,
@@ -101,6 +104,7 @@ def settings_compile(cnf_path)
     group   new_resource.group
     source  "globals.default.json.erb"
     mode    0660
+    action  :create_if_missing
   end
 
 end
