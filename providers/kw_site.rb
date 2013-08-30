@@ -36,7 +36,7 @@ action :create do
     owner     new_resource.owner
     group     new_resource.group
     mode      0660
-    action    :create_if_missing
+    action    :create
     variables ({
       conf_path: cnf_path
     })
