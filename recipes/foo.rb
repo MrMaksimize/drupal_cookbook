@@ -8,7 +8,6 @@
 
 drupal_site 'foo.net' do
   root        '/var/drupals/foo'
-  doc_root    'www'
   db          'fooDB'
   db_username 'fooDBA'
   db_password 'fooPASS'

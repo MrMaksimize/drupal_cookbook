@@ -1,5 +1,6 @@
 require 'chefspec'
-require 'berkshelf'
+require 'fauxhai'
 
-berksfile = Berkshelf::Berksfile.from_file('Berksfile')
-berksfile.install(path: 'vendor/cookbooks')
+$cookbook_paths = [
+  File.expand_path('../cookbooks', __FILE__)
+]
