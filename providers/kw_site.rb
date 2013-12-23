@@ -55,11 +55,13 @@ action :create do
 
 
   settings_compile cnf_path
+
   web_app new_resource.uri do
     server_name     uri
     docroot         doc_root
     server_aliases  []
-    cookbook        'apache2'
+    cookbook        'drupal'
+    template        'ssl_web_app.conf.erb'
     allow_override  ['All']
   end
 
